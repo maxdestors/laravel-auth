@@ -1,0 +1,9 @@
+vendor
+storage/logs/*
+storage/debugbar/*
+storage/framework/sessions/*
+.git
+.gitignore
+Dockerfile
+.vscode
+.editorconfig

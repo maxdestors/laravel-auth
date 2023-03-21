@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+
+  # PHP Backend Service
+  backend:
+    build:
+      args:
+        user: laravel-auth
+        uid: 1000
+      context: .
+      target: $DOCKER_BACKEND_TARGET
+    container_name: laravel-auth-server
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - $BACKEND_EXPOSED_PORT:$BACKEND_PORT
+    restart: always
+    volumes:
+      - ./:/app
+
+  # Database Service
+  mysql:
+    image: mysql:5.7
+    container_name: laravel-auth-mysql
+    environment:
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_USER: $DB_USERNAME
+      MYSQL_PASSWORD: $DB_PASSWORD
+      TZ: Europe/Paris
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$DB_ROOT_PASSWORD
+      interval: 2s
+      timeout: 20s
+      retries: 100
+    ports:
+      - $DB_PORT
+    restart: always
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./sql/:/docker-entrypoint-initdb.d/
+
+  # PhpMyAdmin Service
+  phpmyadmin:
+    container_name: laravel-auth-phpmyadmin
+    environment:
+      PMA_HOSTS: $DB_HOST
+      UPLOAD_LIMIT: 100M
+    image: phpmyadmin/phpmyadmin:5.1.4
+    ports:
+      - $PMA_EXPOSED_PORT:$PMA_PORT
+    restart: always
+
+volumes:
+  mysql:
+  metabase_db:

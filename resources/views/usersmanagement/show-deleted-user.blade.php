@@ -138,7 +138,7 @@
                                 </strong>
                             </div>
                             <div class="col-sm-7">
-                                {{ HTML::mailto($user->email, $user->email) }}
+                                {{ html()->mailto($user->email, $user->email) }}
                             </div>
 
                             <div class="clearfix"></div>

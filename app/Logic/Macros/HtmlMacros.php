@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\HtmlString;
-use Spatie\Html\Facades\Html as HTML;
 
 /**
  * Render an image with an anchor tag around it.
@@ -18,16 +17,16 @@ use Spatie\Html\Facades\Html as HTML;
  *
  * @return string
  */
-HTML::macro('image_link', function ($url = '', $img = '', $alt = '', $link_name = '', $param = [], $active = true, $ssl = false) {
+html()->macro('image_link', function ($url = '', $img = '', $alt = '', $link_name = '', $param = [], $active = true, $ssl = false) {
     $url = URL::to($url, [], $ssl === true);
-    $imageHtml = (string) HTML::img($img, $alt);
+    $imageHtml = (string) html()->img($img, $alt);
     $imageHtml .= $link_name;
 
     if ($active !== true) {
         return new HtmlString($imageHtml);
     }
 
-    $link = HTML::a($url)->html($imageHtml);
+    $link = html()->a($url)->html($imageHtml);
 
     if (is_array($param) && ! empty($param)) {
         $link = $link->attributes($param);
@@ -48,7 +47,7 @@ HTML::macro('image_link', function ($url = '', $img = '', $alt = '', $link_name 
  *
  * @return string
  */
-HTML::macro('icon_link', function ($url = '', $icon = '', $link_name = '', $param = [], $active = true, $ssl = false) {
+html()->macro('icon_link', function ($url = '', $icon = '', $link_name = '', $param = [], $active = true, $ssl = false) {
     $url = URL::to($url, [], $ssl === true);
     $iconHtml = '<i class="'.$icon.'" aria-hidden="true"></i>'.$link_name;
 
@@ -56,7 +55,7 @@ HTML::macro('icon_link', function ($url = '', $icon = '', $link_name = '', $para
         return new HtmlString($iconHtml);
     }
 
-    $link = HTML::a($url)->html($iconHtml);
+    $link = html()->a($url)->html($iconHtml);
 
     if (is_array($param) && ! empty($param)) {
         $link = $link->attributes($param);
@@ -77,7 +76,7 @@ HTML::macro('icon_link', function ($url = '', $icon = '', $link_name = '', $para
  *
  * @return string
  */
-HTML::macro('icon_btn', function ($url = '', $icon = '', $link_name = '', $param = [], $active = true, $ssl = false) {
+html()->macro('icon_btn', function ($url = '', $icon = '', $link_name = '', $param = [], $active = true, $ssl = false) {
     $url = URL::to($url, [], $ssl === true);
     $iconHtml = $link_name.' <i class="'.$icon.'" aria-hidden="true"></i>';
 
@@ -85,7 +84,7 @@ HTML::macro('icon_btn', function ($url = '', $icon = '', $link_name = '', $param
         return new HtmlString($iconHtml);
     }
 
-    $link = HTML::a($url)->html($iconHtml);
+    $link = html()->a($url)->html($iconHtml);
 
     if (is_array($param) && ! empty($param)) {
         $link = $link->attributes($param);
@@ -99,7 +98,7 @@ HTML::macro('icon_btn', function ($url = '', $icon = '', $link_name = '', $param
  *
  * @return string
  */
-HTML::macro('show_username', function () {
+html()->macro('show_username', function () {
     $the_username = (Auth::user()->name === Auth::user()->email) ? ((is_null(Auth::user()->first_name)) ? (Auth::user()->name) : (Auth::user()->first_name)) : ((is_null(Auth::user()->name)) ? (Auth::user()->email) : (Auth::user()->name));
 
     return $the_username;

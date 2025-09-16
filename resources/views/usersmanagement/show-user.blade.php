@@ -111,7 +111,7 @@
 
             <div class="col-sm-7">
               <span data-toggle="tooltip" data-placement="top" title="{{ trans('usersmanagement.tooltips.email-user', ['user' => $user->email]) }}">
-                {{ HTML::mailto($user->email, $user->email) }}
+                {{ html()->mailto($user->email, $user->email) }}
               </span>
             </div>
 

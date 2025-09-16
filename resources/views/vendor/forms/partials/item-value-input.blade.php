@@ -1,11 +1,17 @@
 <div class="form-group has-feedback row">
-    {!! Form::label('value', trans('laravelblocker::laravelblocker.forms.blockedValueLabel'), array('class' => 'col-md-3 control-label', 'id' => 'blockerValueLabel1')); !!}
+    {{ html()->label('value', trans('laravelblocker::laravelblocker.forms.blockedValueLabel'))->class('col-md-3 control-label')->id('blockerValueLabel1') }}
     <div class="col-md-9">
         <div class="input-group">
             @isset($item)
-                {!! Form::text('value', $item->value, array('id' => 'value', 'class' => $errors->has('value') ? 'form-control is-invalid ' : 'form-control', 'placeholder' => trans('laravelblocker::laravelblocker.forms.blockedValuePH'))) !!}
+                {{ html()->text('value', $item->value ?? null)
+                    ->id('value')
+                    ->class($errors->has('value') ? 'form-control is-invalid ' : 'form-control')
+                    ->placeholder(trans('laravelblocker::laravelblocker.forms.blockedValuePH')) }}
             @else
-                {!! Form::text('value', NULL, array('id' => 'value', 'class' => $errors->has('value') ? 'form-control is-invalid ' : 'form-control', 'placeholder' => trans('laravelblocker::laravelblocker.forms.blockedValuePH'))) !!}
+                {{ html()->text('value')
+                    ->id('value')
+                    ->class($errors->has('value') ? 'form-control is-invalid ' : 'form-control')
+                    ->placeholder(trans('laravelblocker::laravelblocker.forms.blockedValuePH')) }}
             @endisset
             <div class="input-group-append">
                 <label class="input-group-text" for="value" id="blockerValueLabel2">

@@ -26,8 +26,14 @@
                 </p>
             </div>
             <div class="modal-footer">
-                {!! Form::button('<i class="fa fa-fw fa-close" aria-hidden="true"></i> ' . trans('laravelblocker::laravelblocker.modals.btnCancel'), array('class' => 'btn btn-outline pull-left btn-flat', 'type' => 'button', 'data-dismiss' => 'modal' )) !!}
-                {!! Form::button('<i class="fa ' . $actionBtnIcon . '" aria-hidden="true"></i> ' . $btnSubmitText, array('class' => 'btn btn-' . $modalClass . ' pull-right btn-flat', 'type' => 'button', 'id' => 'confirm' )) !!}
+                {{ html()->button('<i class="fa fa-fw fa-close" aria-hidden="true"></i> ' . trans('laravelblocker::laravelblocker.modals.btnCancel'))
+                    ->class('btn btn-outline pull-left btn-flat')
+                    ->type('button')
+                    ->attribute('data-dismiss', 'modal') }}
+                {{ html()->button('<i class="fa ' . $actionBtnIcon . '" aria-hidden="true"></i> ' . $btnSubmitText)
+                    ->class('btn btn-' . $modalClass . ' pull-right btn-flat')
+                    ->type('button')
+                    ->id('confirm') }}
             </div>
         </div>
     </div>

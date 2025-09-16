@@ -34,7 +34,7 @@
                             <i class="glyphicon glyphicon-home" aria-hidden="true"></i> {{ trans('laravel2step::laravel-verification.returnButton') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
+                            @csrf
                         </form>
                     </p>
                 </div>

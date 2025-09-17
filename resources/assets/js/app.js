@@ -7,7 +7,9 @@ import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 // import VueSecureHTML from 'vue-html-secure';
 
-Object.assign(window, { $: jQuery, jQuery });
+const $ = jQuery;
+
+Object.assign(window, { $, jQuery });
 window.jQuery = window.$ = $;
 window.Alpine = Alpine;
 // window.Vue = require('vue');
@@ -17,6 +19,7 @@ Alpine.start();
 axios.defaults.withCredentials = true;
 
 const app = createApp({});
+window.app = app;
 
 $.fn.extend({
   toggleText: function (a, b) {

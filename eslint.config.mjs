@@ -1,22 +1,46 @@
-import * as tseslint from "@typescript-eslint/eslint-plugin";
-import parser from "@typescript-eslint/parser";
+import js from "@eslint/js";
+import tseslintPlugin from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import vuePlugin from "eslint-plugin-vue";
+import globals from "globals";
+
+const ignores = [
+  "node_modules/**",
+  "vendor/**",
+  "storage/**",
+  "public/**",
+  "bootstrap/cache/**",
+];
 
 export default [
   {
-    files: ["**/*.ts", "**/*.tsx", "**/*.vue"],
+    ignores,
+  },
+  {
     languageOptions: {
-      parser, // @typescript-eslint/parser
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+  js.configs.recommended,
+  ...vuePlugin.configs["flat/recommended"],
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: {
+      parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
-        project: ["./tsconfig.json"], // remove if not using type-aware linting
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-eslint": tseslintPlugin,
     },
     rules: {
-      ...tseslint.configs.recommended.rules,
+      ...tseslintPlugin.configs.recommended.rules,
     },
   },
 ];

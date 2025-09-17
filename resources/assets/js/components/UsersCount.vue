@@ -3,9 +3,14 @@
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <div class="card">
-          <div class="card-header">Current Users Online</div>
+          <div class="card-header">
+            Current Users Online
+          </div>
           <div class="card-body">
-            <canvas id="myChart" height="100"></canvas>
+            <canvas
+              id="myChart"
+              height="100"
+            />
           </div>
         </div>
       </div>
@@ -21,6 +26,7 @@ export default {
     return {
       count: 0,
       labels: ["Online"],
+      chart: null,
     };
   },
   mounted() {
@@ -30,7 +36,7 @@ export default {
   methods: {
     drawChart() {
       const ctx = document.getElementById("myChart");
-      const myChart = new Chart(ctx, {
+      this.chart = new Chart(ctx, {
         type: "bar",
         data: {
           labels: this.labels,
@@ -56,16 +62,20 @@ export default {
       });
     },
     update() {
-      Echo.join("chart")
+      if (!window.Echo) {
+        return;
+      }
+
+      window.Echo.join("chart")
         .here((users) => {
           this.count = users.length;
           this.drawChart();
         })
-        .joining((user) => {
+        .joining(() => {
           this.count++;
           this.drawChart();
         })
-        .leaving((user) => {
+        .leaving(() => {
           this.count--;
           this.drawChart();
         });

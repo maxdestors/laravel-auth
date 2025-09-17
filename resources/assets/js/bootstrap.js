@@ -2,15 +2,18 @@ import axios from "axios";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import * as Popper from "@popperjs/core";
+import jQuery from "jquery";
 import loadash from "lodash";
+
+const $ = jQuery;
 
 window._ = loadash;
 window.Popper = Popper;
 window.axios = axios;
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.axios.defaults.withCredentials = true;
-// window.Vue = require("vue");
 window.Pusher = Pusher;
+window.$ = window.jQuery = $;
 
 // const password = require("password-strength-meter");
 const token = document.head.querySelector('meta[name="csrf-token"]');
@@ -23,14 +26,6 @@ if (token) {
   );
 }
 
-try {
-  // var $ = require('jquery');
-  // window.$ = window.jQuery = require("jquery");
-  // require("hideshowpassword");
-  // require('password-strength-meter');
-} catch (e) {}
-
-/*eslint-disable */
 window.Echo = new Echo({
   broadcaster: "pusher",
   key: import.meta.env.VITE_PUSHER_APP_KEY,
@@ -43,7 +38,7 @@ window.Echo = new Echo({
   forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? "https") === "https",
   enabledTransports: ["ws", "wss"],
 });
-/*eslint-enable */
+ 
 
 $.fn.extend({
   toggleText(a, b) {

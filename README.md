@@ -1,6 +1,6 @@
 ## Laravel Auth
 
-#### Laravel Auth is a Complete Build of Laravel 10 with Email Registration Verification, Social Authentication, User Roles and Permissions, User Profiles, and Admin restricted user management system. Built on Bootstrap 4.
+#### Laravel Auth is a Complete Build of Laravel 12 with Email Registration Verification, Social Authentication, User Roles and Permissions, User Profiles, and Admin restricted user management system. Built on Bootstrap 4.
 
 [![StyleCI](https://styleci.io/repos/44714043/shield?branch=master)](https://styleci.io/repos/44714043)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jeremykenedy/laravel-auth/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jeremykenedy/laravel-auth/?branch=master)
@@ -51,15 +51,15 @@ If you like this, you will love [Laravel Auth Spa](https://github.com/jeremykene
 
 ### About
 
-Laravel 10 with user authentication, registration with email confirmation, social media authentication, password recovery, and captcha protection. Uses official [Bootstrap 4](https://getbootstrap.com). This also makes full use of Controllers for the routes, templates for the views, and makes use of middleware for routing. Project can be stood up in minutes.
+Laravel 12 with user authentication, registration with email confirmation, social media authentication, password recovery, and captcha protection. Uses official [Bootstrap 4](https://getbootstrap.com). This also makes full use of Controllers for the routes, templates for the views, and makes use of middleware for routing. Project can be stood up in minutes.
 
 ### Features
 
-#### A [Laravel](https://laravel.com/) 10 with [Bootstrap](https://getbootstrap.com) 4.x project.
+#### A [Laravel](https://laravel.com/) 12 with [Bootstrap](https://getbootstrap.com) 4.x project.
 
 | Laravel Auth Features                                                                                                                                |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Built on [Laravel](https://laravel.com/) 10                                                                                                          |
+| Built on [Laravel](https://laravel.com/) 12                                                                                                          |
 | Built on [Bootstrap](https://getbootstrap.com/) 4                                                                                                    |
 | Uses [MySQL](https://github.com/mysql) Database (can be changed)                                                                                     |
 | Uses [Artisan](https://laravel.com/docs/master/artisan) to manage database migration, schema creations, and create/publish page controller templates |
@@ -133,22 +133,18 @@ php artisan vendor:publish --tag=laravel-email-database-log-migration
 11. From the projects root folder run `php artisan db:seed`
 12. Compile the front end assets with [npm steps](#using-npm) or [yarn steps](#using-yarn).
 
-#### Build the Front End Assets with Mix
+#### Build the Front End Assets with Vite
 
 ##### Using Yarn:
 
 1. Install yarn (dependent on your distribution)
 2. From the projects root folder run `yarn install`
-3. From the projects root folder run `yarn run dev` or `yarn run production`
-
--   You can watch assets with `yarn run watch`
+3. From the projects root folder run `yarn run dev` or `yarn run build`
 
 ##### Using NPM:
 
 1. From the projects root folder run `npm install`
-2. From the projects root folder run `npm run dev` or `npm run production`
-
--   You can watch assets with `npm run watch`
+2. From the projects root folder run `npm run dev` or `npm run build`
 
 #### Optionally Build Cache
 
@@ -628,6 +624,7 @@ INSTAGRAM_REDIRECT_URI=https://YOURWEBURLHERE.COM/social/handle/instagram
 
 ###### Updates:
 
+-   Update to Laravel 12
 -   Update to Laravel 10 (Major Changes)
 -   Update to Laravel 9
 -   Update to Laravel 8
@@ -743,15 +740,32 @@ laravel-auth
 ├── .env
 ├── .env.example
 ├── .env.travis
+├── .eslintrc.js
 ├── .gitattributes
 ├── .github
 │   ├── FUNDING.yml
-│   └── ISSUE_TEMPLATE
-│       ├── bug_report.md
-│       ├── feature_request.md
-│       └── project-questions-and-help.md
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   ├── feature_request.md
+│   │   └── project-questions-and-help.md
+│   ├── dependabot.yml
+│   ├── labeler.yml
+│   └── workflows
+│       ├── changelog.yml
+│       ├── codeql.yml
+│       ├── dependency-review.yml
+│       ├── deploy.yml
+│       ├── gitguardian.yml
+│       ├── greetings.yml
+│       ├── labeler.yml
+│       ├── laravel.yml
+│       ├── node.js.yml
+│       ├── php.yml
+│       ├── sentry.yml
+│       └── stale.yml
 ├── .gitignore
-├── .phpunit.result.cache
+├── .scripts
+│   └── deploy.sh
 ├── .styleci.yml
 ├── .travis.yml
 ├── CODE_OF_CONDUCT.md
@@ -764,15 +778,22 @@ laravel-auth
 │   │   │   └── DeleteExpiredActivations.php
 │   │   └── Kernel.php
 │   ├── Exceptions
-│   │   └── Handler.php
+│   │   ├── Handler.php
+│   │   └── SocialProviderDeniedException.php
 │   ├── Http
 │   │   ├── Controllers
 │   │   │   ├── AdminDetailsController.php
 │   │   │   ├── Auth
 │   │   │   │   ├── ActivateController.php
+│   │   │   │   ├── AuthenticatedSessionController.php
+│   │   │   │   ├── ConfirmablePasswordController.php
 │   │   │   │   ├── ForgotPasswordController.php
 │   │   │   │   ├── LoginController.php
+│   │   │   │   ├── NewPasswordController.php
+│   │   │   │   ├── PasswordController.php
+│   │   │   │   ├── PasswordResetLinkController.php
 │   │   │   │   ├── RegisterController.php
+│   │   │   │   ├── RegisteredUserController.php
 │   │   │   │   ├── ResetPasswordController.php
 │   │   │   │   └── SocialController.php
 │   │   │   ├── Controller.php
@@ -788,14 +809,18 @@ laravel-auth
 │   │   ├── Middleware
 │   │   │   ├── Authenticate.php
 │   │   │   ├── CheckCurrentUser.php
-│   │   │   ├── CheckForMaintenanceMode.php
 │   │   │   ├── CheckIsUserActivated.php
 │   │   │   ├── EncryptCookies.php
+│   │   │   ├── PreventRequestsDuringMaintenance.php
 │   │   │   ├── RedirectIfAuthenticated.php
 │   │   │   ├── TrimStrings.php
+│   │   │   ├── TrustHosts.php
 │   │   │   ├── TrustProxies.php
+│   │   │   ├── ValidateSignature.php
 │   │   │   └── VerifyCsrfToken.php
 │   │   ├── Requests
+│   │   │   ├── Auth
+│   │   │   │   └── LoginRequest.php
 │   │   │   ├── DeleteUserAccount.php
 │   │   │   ├── UpdateUserPasswordRequest.php
 │   │   │   └── UpdateUserProfile.php
@@ -810,11 +835,14 @@ laravel-auth
 │   │   └── ExceptionOccured.php
 │   ├── Models
 │   │   ├── Activation.php
+│   │   ├── Permission.php
 │   │   ├── Profile.php
+│   │   ├── Role.php
 │   │   ├── Social.php
 │   │   ├── Theme.php
 │   │   └── User.php
 │   ├── Notifications
+│   │   ├── ResetPasswordNotification.php
 │   │   ├── SendActivationEmail.php
 │   │   └── SendGoodbyeEmail.php
 │   ├── Providers
@@ -826,14 +854,17 @@ laravel-auth
 │   │   ├── LocalEnvironmentServiceProvider.php
 │   │   ├── MacroServiceProvider.php
 │   │   └── RouteServiceProvider.php
-│   └── Traits
-│       ├── ActivationTrait.php
-│       ├── CaptchaTrait.php
-│       └── CaptureIpTrait.php
+│   ├── Traits
+│   │   ├── ActivationTrait.php
+│   │   ├── CaptchaTrait.php
+│   │   └── CaptureIpTrait.php
+│   └── View
+│       └── Components
+│           ├── AppLayout.php
+│           └── GuestLayout.php
 ├── artisan
 ├── bootstrap
 │   ├── app.php
-│   ├── autoload.php
 │   └── cache
 │       ├── .gitignore
 │       ├── packages.php
@@ -859,6 +890,7 @@ laravel-auth
 │   ├── mail.php
 │   ├── queue.php
 │   ├── roles.php
+│   ├── sanctum.php
 │   ├── services.php
 │   ├── session.php
 │   ├── settings.php
@@ -867,7 +899,7 @@ laravel-auth
 ├── database
 │   ├── .gitignore
 │   ├── factories
-│   │   └── ModelFactory.php
+│   │   └── UserFactory.php
 │   ├── migrations
 │   │   ├── 2014_10_12_000000_create_users_table.php
 │   │   ├── 2014_10_12_100000_create_password_resets_table.php
@@ -883,8 +915,10 @@ laravel-auth
 │   │   ├── 2017_12_09_070937_create_two_step_auth_table.php
 │   │   ├── 2019_02_19_032636_create_laravel_blocker_types_table.php
 │   │   ├── 2019_02_19_045158_create_laravel_blocker_table.php
-│   │   └── 2019_08_19_000000_create_failed_jobs_table.php
-│   └── seeds
+│   │   ├── 2019_08_19_000000_create_failed_jobs_table.php
+│   │   ├── 2019_12_14_000001_create_personal_access_tokens_table.php
+│   │   └── 2023_02_26_001638_create_email_log.php
+│   └── seeders
 │       ├── BlockedItemsTableSeeder.php
 │       ├── BlockedTypeTableSeeder.php
 │       ├── ConnectRelationshipsSeeder.php
@@ -893,12 +927,43 @@ laravel-auth
 │       ├── RolesTableSeeder.php
 │       ├── ThemesTableSeeder.php
 │       └── UsersTableSeeder.php
+├── eslint.config.mjs
 ├── license.svg
 ├── package-lock.json
 ├── package.json
 ├── phpunit.xml
+├── postcss.config.js
 ├── public
 │   ├── .htaccess
+│   ├── build
+│   │   ├── .vite
+│   │   │   └── manifest.json
+│   │   └── assets
+│   │       ├── app-B7vS8Mbm.css
+│   │       ├── app-BG0_vVbD.js
+│   │       ├── app-BG0_vVbD.js.map
+│   │       ├── app-WPGwnzyH.css
+│   │       ├── app-legacy-DDUFYwBY.js
+│   │       ├── app-legacy-DDUFYwBY.js.map
+│   │       ├── app-legacy-Mb7mMJCE.js
+│   │       ├── app-legacy-Mb7mMJCE.js.map
+│   │       ├── fa-brands-400-D1LuMI3I.ttf
+│   │       ├── fa-brands-400-D_cYUPeE.woff2
+│   │       ├── fa-regular-400-BjRzuEpd.woff2
+│   │       ├── fa-regular-400-DZaxPHgR.ttf
+│   │       ├── fa-solid-900-CTAAxXor.woff2
+│   │       ├── fa-solid-900-D0aA9rwL.ttf
+│   │       ├── fa-v4compatibility-C9RhG_FT.woff2
+│   │       ├── fa-v4compatibility-CCth-dXg.ttf
+│   │       ├── fontawesome-webfont-B-jkhYfk.woff2
+│   │       ├── fontawesome-webfont-CDK5bt4p.woff
+│   │       ├── fontawesome-webfont-CQDK8MU3.ttf
+│   │       ├── fontawesome-webfont-D13rzr4g.svg
+│   │       ├── fontawesome-webfont-G5YE5S7X.eot
+│   │       ├── polyfills-legacy-Ci8jmAHT.js
+│   │       ├── polyfills-legacy-Ci8jmAHT.js.map
+│   │       ├── wink.png
+│   │       └── wink.svg
 │   ├── css
 │   │   ├── app.css
 │   │   └── laravel2step
@@ -920,11 +985,6 @@ laravel-auth
 │   │   ├── wink.png
 │   │   └── wink.svg
 │   ├── index.php
-│   ├── js
-│   │   ├── app.99230f42ad184f498ce6.js
-│   │   ├── app.js
-│   │   └── app.js.LICENSE.txt
-│   ├── mix-manifest.json
 │   ├── robots.txt
 │   └── web.config
 ├── resources
@@ -1020,13 +1080,16 @@ laravel-auth
 │       ├── emails
 │       │   └── exception.blade.php
 │       ├── errors
+│       │   ├── 401.blade.php
 │       │   ├── 403.blade.php
 │       │   ├── 404.blade.php
 │       │   ├── 500.blade.php
 │       │   └── 503.blade.php
 │       ├── home.blade.php
 │       ├── layouts
-│       │   └── app.blade.php
+│       │   ├── app.blade.php
+│       │   ├── guest.blade.php
+│       │   └── navigation.blade.php
 │       ├── modals
 │       │   ├── modal-delete.blade.php
 │       │   ├── modal-form.blade.php
@@ -1060,6 +1123,7 @@ laravel-auth
 │       │   ├── datatables.blade.php
 │       │   ├── delete-modal-script.blade.php
 │       │   ├── form-modal-script.blade.php
+│       │   ├── ga-analytics.blade.php
 │       │   ├── gmaps-address-lookup-api3.blade.php
 │       │   ├── google-maps-geocode-and-map.blade.php
 │       │   ├── save-modal-script.blade.php
@@ -1085,8 +1149,9 @@ laravel-auth
 │   ├── channels.php
 │   ├── console.php
 │   └── web.php
-├── server.php
-└── webpack.mix.js
+├── tailwind.config.js
+├── tailwindcss-perspective.js
+└── vite.config.js
 ```
 
 -   Tree command can be installed using brew: `brew install tree`

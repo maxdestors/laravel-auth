@@ -17,7 +17,7 @@
     "guzzlehttp/guzzle": "^7.2",
     "intervention/image": "^2.7",
     "jeremykenedy/laravel-blocker": "dev-laravel12",
-    "jeremykenedy/laravel-email-database-log": "dev-laravel12",
+    "jeremykenedy/laravel-email-database-log": "dev-fix/phpunit-gh-action",
     "jeremykenedy/laravel-exception-notifier": "^4.0",
     "jeremykenedy/laravel-https": "^2.0",
     "jeremykenedy/laravel-logger": "^10.0",
